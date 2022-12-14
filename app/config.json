@@ -1,0 +1,10 @@
+{
+  "title": "The Norfolk Developers' Conference",
+  "date": "23rd & 24th February 2023",
+  "description": "Talks on language, business, methodology, & game development. Join us for two days of development goodness at The Kings' Centre.",
+  "color": "#44337a",
+  "hero": "/static/images/nordev.jpg",
+  "url": "https://nordevcon.com",
+  "tickets": "https://ti.to/norfolkdevelopers/nordevcon-23",
+  "schedule_key": "nordev-schedule-wishlist__2023_v2"
+}
