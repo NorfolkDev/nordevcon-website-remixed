@@ -1,22 +1,19 @@
-# Welcome to Remix!
+# The Norfolk Developer's Website
 
-- [Remix Docs](https://remix.run/docs)
+The website data for speakers and schedule is sourced from an Airtable spreadsheet via the Airtable API.
 
-## Development
+## Installation and development
 
-You will be utilizing Wrangler for local development to emulate the Cloudflare runtime. This is already wired up in your package.json as the `dev` script:
+1. Clone the repo
+2. Copy `.dev.vars.example` file to `.dev.vars`.
+3. Set `AIRTABLE_TOKEN` in `.dev.vars` to an Airtable API key for an account with access to the Nor Dev Con Airtable (Sign up for Airtable, then ask Alex or Shaun to share the sheet with you).
+4. Install dependencies with `pnpm install`
+5. Launch the development server: `pnpm run dev`
+6. Visit http://localhost:8788
 
-```sh
-# start the remix dev server and wrangler
-npm run dev
-```
+## Archive
 
-Open up [http://127.0.0.1:8788](http://127.0.0.1:8788) and you should be ready to go!
+TODO: Update these links
 
-## Deployment
-
-Cloudflare Pages are currently only deployable through their Git provider integrations.
-
-If you don't already have an account, then [create a Cloudflare account here](https://dash.cloudflare.com/sign-up/pages) and after verifying your email address with Cloudflare, go to your dashboard and follow the [Cloudflare Pages deployment guide](https://developers.cloudflare.com/pages/framework-guides/deploy-anything).
-
-Configure the "Build command" should be set to `npm run build`, and the "Build output directory" should be set to `public`.
+- 2020 is in [`archive/2020`](../../../tree/archive/2020)
+- 2022 is in [`archive/2022`](../../../tree/archive/2022)
