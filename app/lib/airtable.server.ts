@@ -30,7 +30,7 @@ export class AirtableApi {
         },
       });
       response = new Response(response.body, response);
-      response.headers.append("Cache-Control", "maxage=60");
+      response.headers.append("Cache-Control", "s-maxage=60");
 
       this.#waitUntil(cache.put(url, response.clone()));
     } else {
