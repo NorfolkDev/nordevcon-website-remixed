@@ -43,7 +43,6 @@ export default async function handleRequest(
   );
 
   if (isbot(request.headers.get("user-agent"))) {
-    console.log("BOT!!");
     await stream.allReady;
   }
 
