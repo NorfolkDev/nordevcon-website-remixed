@@ -6,6 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
 } from "@remix-run/react";
 import globalStyles from "./styles/globals.css";
 import config from "~/config.json";
@@ -44,4 +45,25 @@ export default function App() {
       </body>
     </html>
   );
+}
+
+export function CatchBoundary() {
+  let caught = useCatch();
+
+  if (caught.status == 404)
+  {
+      return (
+        <html lang="en">
+          <head>
+            <h1> {caught.status}: {caught.statusText} - We looked everywhere but this crab must have gotten to it first</h1>
+          </head>
+          <body>
+              <img 
+              src="/img/404.png"
+              alt="Don't look him in the eye!"
+              />
+          </body>
+        </html>
+  );
+}
 }
