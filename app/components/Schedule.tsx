@@ -111,7 +111,7 @@ function Talks({ talks, stars, isSharing }: TalksProps) {
             // @ts-expect-error
             style={{ borderColor: Tracks[talk.Track]?.border }}
           >
-            {talk.TopicNames?.length > 0 && (
+            {talk.TopicNames.length > 0 && (
               <div className="mb-2">
                 <span className="p-1 text-sm font-bold uppercase rounded bg-cyan-200 text-cyan-700">
                   {talk.TopicNames.join(", ")}
@@ -136,8 +136,7 @@ function Talks({ talks, stars, isSharing }: TalksProps) {
                     </button>
                   )}
                 </h3>
-
-                {talk.SpeakerNames?.length && (
+                {!!talk.SpeakerNames.length && (
                   <p className="text-gray-900">
                     {talk.SpeakerNames.join(", ")}
                   </p>
