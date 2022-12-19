@@ -1,13 +1,14 @@
 import { Link } from "@remix-run/react";
 import { SocialIcon } from "react-social-icons";
+import type { SponsorRecord } from "~/lib/airtable.server";
 import { parseSponsors } from "~/lib/sponsors";
 
 interface SponsorsProps {
-  data: any[];
+  data: SponsorRecord[];
 }
 
 export function Sponsors({ data }: SponsorsProps) {
-  const [elite, partner, associate] = parseSponsors(data);
+  const { elite, partner, associate } = parseSponsors(data);
 
   return (
     <div className="mt-12 bg-indigo-700 lg:mt-20">
@@ -55,7 +56,7 @@ export function Sponsors({ data }: SponsorsProps) {
 }
 
 interface EliteProps {
-  organisation: any;
+  organisation: SponsorRecord["fields"] | undefined;
 }
 
 function Elite({ organisation }: EliteProps) {
@@ -90,7 +91,7 @@ function Elite({ organisation }: EliteProps) {
 }
 
 interface SponsorProps {
-  organisations: any[];
+  organisations: SponsorRecord["fields"][];
 }
 
 function Partner({ organisations }: SponsorProps) {
@@ -136,7 +137,10 @@ function Associate({ organisations }: SponsorProps) {
 }
 
 interface SocialProps {
-  organisation: any;
+  organisation: Pick<
+    SponsorRecord["fields"],
+    "Twitter" | "LinkedIn" | "Website"
+  >;
 }
 
 function Social({ organisation }: SocialProps) {
