@@ -34,18 +34,9 @@ export const links: LinksFunction = () => [
 
 export default function App() {
   return (
-    <html lang="en">
-      <head>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
+    <Document>
+      <Outlet />
+    </Document>
   );
 }
 
@@ -58,29 +49,42 @@ export function CatchBoundary() {
       : caught.statusText;
 
   return (
-    <html lang="en" className="bg-slate-900">
+    <Document className="bg-slate-900">
+      <div className="-mt-4 md:-mt-8 lg:-mt-12">
+        <WildWaves />
+      </div>
+      <main className="flex flex-col justify-center gap-8 p-8 mx-auto max-w-7xl lg:gap-16 lg:p-16">
+        <h1 className="text-3xl font-bold leading-relaxed text-center text-white lg:text-5xl">
+          <span className="text-wave-orange">{caught.status}:</span>{" "}
+          {statusText}
+        </h1>
+
+        <div className="max-w-5xl mx-auto">
+          <img
+            src="/img/404.jpg"
+            alt="Don't look him in the eye!"
+            className="rounded-lg"
+          />
+        </div>
+      </main>
+    </Document>
+  );
+}
+
+interface DocumentProps {
+  children: ReactNode;
+  className?: string;
+}
+
+function Document({ children, className }: DocumentProps) {
+  return (
+    <html lang="en">
       <head>
         <Meta />
         <Links />
       </head>
-      <body>
-        <div className="-mt-4 md:-mt-8 lg:-mt-12">
-          <WildWaves />
-        </div>
-        <main className="flex flex-col justify-center gap-8 p-8 mx-auto max-w-7xl lg:gap-16 lg:p-16">
-          <h1 className="text-3xl font-bold leading-relaxed text-center text-white lg:text-5xl">
-            <span className="text-wave-orange">{caught.status}:</span>{" "}
-            {statusText}
-          </h1>
-
-          <div className="max-w-5xl mx-auto">
-            <img
-              src="/img/404.jpg"
-              alt="Don't look him in the eye!"
-              className="rounded-lg"
-            />
-          </div>
-        </main>
+      <body className={className}>
+        {children}
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
