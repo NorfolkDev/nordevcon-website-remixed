@@ -10,6 +10,7 @@ import {
 } from "@remix-run/react";
 import globalStyles from "./styles/globals.css";
 import config from "~/config.json";
+import WildWaves from "./components/svg/WideWaves";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -50,30 +51,40 @@ export default function App() {
 export function CatchBoundary() {
   let caught = useCatch();
 
-  if (caught.status == 404)
-  {
-      return (
-      <html lang="en" className="min-h-screen bg-slate-900 text-center flex flex-col space-y-7">
+  let statusText =
+    caught.status === 404
+      ? "Not Found - We looked everywhere but this crab must have gotten to it first"
+      : caught.statusText;
+
+  return (
+    <html lang="en" className="bg-slate-900">
       <head>
         <Meta />
         <Links />
       </head>
-        <h1 className="font-bold text-5xl text-white"> {caught.status}: {caught.statusText} - We looked everywhere but this crab must have gotten to it first</h1>
       <body>
-        <div className="hero container max-w-screen-lg mx-auto pb-10 flex justify-center">
-          <img 
-          src="/img/404.png"
-          alt="Don't look him in the eye!"
-          className="rounded-lg"
-          />
+        <div className="-mt-4 md:-mt-8 lg:-mt-12">
+          <WildWaves />
         </div>
+        <main className="flex flex-col justify-center gap-8 p-8 mx-auto max-w-7xl lg:gap-16 lg:p-16">
+          <h1 className="text-3xl font-bold leading-relaxed text-center text-white lg:text-5xl">
+            <span className="text-wave-orange">{caught.status}:</span>{" "}
+            {statusText}
+          </h1>
+
+          <div className="max-w-5xl mx-auto">
+            <img
+              src="/img/404.jpg"
+              alt="Don't look him in the eye!"
+              className="rounded-lg"
+            />
+          </div>
+        </main>
         <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
       </body>
     </html>
-
   );
-}
 }
