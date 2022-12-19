@@ -1,5 +1,6 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
@@ -59,12 +60,27 @@ export function CatchBoundary() {
           {statusText}
         </h1>
 
-        <div className="max-w-5xl mx-auto">
-          <img
-            src="/img/404.jpg"
-            alt="Don't look him in the eye!"
-            className="rounded-lg"
-          />
+        <div className="relative max-w-5xl mx-auto">
+          {caught.status === 404 ? (
+            <>
+              <Link to="/">
+                <img
+                  src="/img/404.jpg"
+                  alt="Click here to go home"
+                  className="rounded-lg"
+                />
+              </Link>
+              <Link to="/" className="flex justify-center text-white underline">
+                Go back home
+              </Link>
+            </>
+          ) : (
+            <img
+              src="/img/error.jpg"
+              alt="Don't look him in the eye"
+              className="rounded-lg"
+            />
+          )}
         </div>
       </main>
     </Document>
