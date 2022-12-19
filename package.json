@@ -9,7 +9,8 @@
     "dev:css": "tailwindcss -w -i ./styles/globals.css -o app/styles/globals.css",
     "dev": "remix build && run-p \"dev:*\"",
     "start": "cross-env NODE_ENV=production npm run dev:wrangler",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.13",
