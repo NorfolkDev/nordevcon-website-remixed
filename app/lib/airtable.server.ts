@@ -1,3 +1,4 @@
+import { z } from "zod";
 const apiBase = "https://api.airtable.com/v0/appsFsySYgjKqDoLu";
 
 export class AirtableApi {
@@ -8,12 +9,18 @@ export class AirtableApi {
     this.#waitUntil = context.waitUntil;
   }
 
-  getSchedule() {
-    return this.#get("/Schedule");
+  async getSchedule(): Promise<ScheduleRecord[]> {
+    const response = await this.#get("/Schedule");
+    const json = await response.json();
+
+    return scheduleResponseSchema.parse(json).records;
   }
 
-  getSponsors() {
-    return this.#get("/Sponsors");
+  async getSponsors(): Promise<SponsorRecord[]> {
+    const response = await this.#get("/Sponsors");
+    const json = await response.json();
+
+    return sponsorResponseSchema.parse(json).records;
   }
 
   async #get(endpoint: string) {
@@ -37,8 +44,65 @@ export class AirtableApi {
       console.log("Cache hit", url);
     }
 
-    const json = (await response.json()) as any;
-
-    return json.records;
+    return response;
   }
 }
+
+type AnySchema = z.ZodSchema<any, any, any>;
+
+const airtableResponseSchema = <TSchema extends AnySchema>(
+  recordSchema: TSchema
+): z.ZodSchema<{ records: z.infer<TSchema>[] }> =>
+  z.object({
+    records: z.array(recordSchema),
+  });
+
+const stringArraySchema = z.array(z.string());
+
+const scheduleResponseSchema = airtableResponseSchema(
+  z.object({
+    id: z.string(),
+    createdTime: z.string(),
+    fields: z.object({
+      Track: z.optional(z.string()),
+      Description: z.optional(z.string()),
+      Topics: z.optional(stringArraySchema).default([]),
+      TopicNames: z.optional(stringArraySchema).default([]),
+      Speakers: z.optional(stringArraySchema).default([]),
+      SpeakerNames: z.optional(stringArraySchema).default([]),
+      Live: z.optional(z.boolean()).default(false),
+      Cancelled: z.optional(z.boolean()).default(false),
+      id: z.number(),
+      Start: z.string(),
+      Title: z.optional(z.string()),
+    }),
+  })
+);
+
+const sponsorResponseSchema = airtableResponseSchema(
+  z.object({
+    id: z.string(),
+    createdTime: z.string(),
+    fields: z.object({
+      // TODO(TS): String union?
+      Package: z.string(),
+      Email: z.string(),
+      Live: z.optional(z.boolean()).default(false),
+      Invoiced: z.optional(z.boolean()).default(false),
+      Description: z.string(),
+      Name: z.string(),
+      Logo: z.string(),
+      Website: z.string(),
+      Twitter: z.optional(z.string()),
+      LinkedIn: z.optional(z.string()),
+    }),
+  })
+);
+
+export type ScheduleRecord = z.infer<
+  typeof scheduleResponseSchema
+>["records"][number];
+
+export type SponsorRecord = z.infer<
+  typeof sponsorResponseSchema
+>["records"][number];

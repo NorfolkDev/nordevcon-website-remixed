@@ -4,8 +4,10 @@ import Star from "./svg/Star";
 import config from "../config.json";
 import { useStickyState } from "~/lib/use-sticky-state";
 import { clsx } from "clsx";
+import type { FlattenedDays } from "~/lib/schedule";
 import { parseSchedule, Tracks } from "~/lib/schedule";
 import { Link } from "@remix-run/react";
+import type { ScheduleRecord } from "~/lib/airtable.server";
 
 function Nav() {
   return (
@@ -26,7 +28,7 @@ function Nav() {
 }
 
 interface Wishlistprops {
-  wishlist: string[];
+  wishlist: number[];
   share: URLSearchParams;
 }
 
@@ -48,8 +50,8 @@ function Wishlist({ wishlist, share }: Wishlistprops) {
 
 interface DayProps {
   datetime: Date;
-  sessions: any[];
-  stars: [string[], (value: string) => void];
+  sessions: FlattenedDays[number]["sessions"];
+  stars: [number[], (value: number) => void];
   isSharing: boolean;
 }
 
@@ -85,8 +87,8 @@ function Day({ datetime, sessions, stars, isSharing }: DayProps) {
 }
 
 interface TalksProps {
-  talks: any[];
-  stars: [string[], (value: string) => void];
+  talks: FlattenedDays[number]["sessions"][number]["talks"];
+  stars: [number[], (value: number) => void];
   isSharing: boolean;
 }
 
@@ -95,7 +97,7 @@ function Talks({ talks, stars, isSharing }: TalksProps) {
 
   return (
     <ol className="xl:flex">
-      {talks.map((talk, i) => {
+      {talks.map((talk) => {
         const isWishlist = wishlist.includes(talk.id);
 
         return (
@@ -109,7 +111,7 @@ function Talks({ talks, stars, isSharing }: TalksProps) {
             // @ts-expect-error
             style={{ borderColor: Tracks[talk.Track]?.border }}
           >
-            {talk.TopicNames?.length > 0 && (
+            {talk.TopicNames.length > 0 && (
               <div className="mb-2">
                 <span className="p-1 text-sm font-bold uppercase rounded bg-cyan-200 text-cyan-700">
                   {talk.TopicNames.join(", ")}
@@ -134,8 +136,7 @@ function Talks({ talks, stars, isSharing }: TalksProps) {
                     </button>
                   )}
                 </h3>
-
-                {talk.SpeakerNames?.length && (
+                {!!talk.SpeakerNames.length && (
                   <p className="text-gray-900">
                     {talk.SpeakerNames.join(", ")}
                   </p>
@@ -150,7 +151,7 @@ function Talks({ talks, stars, isSharing }: TalksProps) {
 }
 
 interface ScheduleProps {
-  data: any;
+  data: ScheduleRecord[];
   filter?: string[];
   isSharing?: boolean;
 }
@@ -163,13 +164,13 @@ export function Schedule({
   const schedule = parseSchedule(data, filter);
 
   const ScheduleKey = config.schedule_key;
-  const [wishlist, setWishlist] = useStickyState([] as string[], ScheduleKey);
+  const [wishlist, setWishlist] = useStickyState([] as number[], ScheduleKey);
   const share = new URLSearchParams({
     share: wishlist.toString(),
   });
 
   // @TODO: Ensure only 1 item per track can be saved
-  const addWishlist = (add: string) =>
+  const addWishlist = (add: number) =>
     wishlist.includes(add)
       ? setWishlist(wishlist.filter((id) => id !== add))
       : setWishlist([...wishlist, add]);
