@@ -68,9 +68,7 @@ function Elite({ organisation }: EliteProps) {
         <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
           {organisation.Name}
         </h2>
-        <p className="max-w-3xl mt-3 text-lg text-slate-100">
-          {organisation.Description}
-        </p>
+        <SponsorDescription description={organisation.Description} />
         <div className="flex gap-4 mt-8">
           <div className="rounded-md shadow">
             <a
@@ -109,7 +107,7 @@ function Partner({ organisations }: SponsorProps) {
 
             <div className="mt-8">
               <h3 className="mb-2 text-3xl font-bold">{Name}</h3>
-              <p className="mb-4">{Description}</p>
+              <SponsorDescription description={Description} />
               <Social organisation={organisation} />
             </div>
           </div>
@@ -166,5 +164,21 @@ function Social({ organisation }: SocialProps) {
         </li>
       )}
     </ul>
+  );
+}
+
+interface SponsorDescriptionProps {
+  description: string;
+}
+
+function SponsorDescription({ description }: SponsorDescriptionProps) {
+  return (
+    <>
+      {description.split("\n\n").map((paragraph, key) => (
+        <p key={`sponsor_description_${key}`} className="mb-4">
+          {paragraph}
+        </p>
+      ))}
+    </>
   );
 }
