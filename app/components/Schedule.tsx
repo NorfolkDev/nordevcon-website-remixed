@@ -67,7 +67,7 @@ function Day({ datetime, sessions, stars, isSharing }: DayProps) {
       {sessions.map((session, i) => (
         <li key={`sessions_${date}_${i}`} className="flex py-2">
           <div className="mr-8">
-            <h3 className="pt-2 text-2xl leading-none text-gray-600 align-top monospace">
+            <h3 className="pt-2 text-2xl leading-none text-gray-600 align-top tabular-nums">
               {format(session.datetime, "HH:mm")}
             </h3>
           </div>
