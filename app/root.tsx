@@ -53,13 +53,27 @@ export function CatchBoundary() {
   if (caught.status == 404)
   {
       return (
-        <div className="min-h-vh bg-indigo-500">
-          <h1> {caught.status}: {caught.statusText} - We looked everywhere but this crab must have gotten to it first</h1>
+      <html lang="en" className="min-h-screen bg-slate-900 text-center flex flex-col space-y-7">
+      <head>
+        <Meta />
+        <Links />
+      </head>
+        <h1 className="font-bold text-5xl text-white"> {caught.status}: {caught.statusText} - We looked everywhere but this crab must have gotten to it first</h1>
+      <body>
+        <div className="hero container max-w-screen-lg mx-auto pb-10 flex justify-center">
           <img 
           src="/img/404.png"
           alt="Don't look him in the eye!"
+          className="rounded-lg"
           />
         </div>
+        <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+
   );
 }
 }
