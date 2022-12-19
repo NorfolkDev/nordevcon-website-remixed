@@ -14,7 +14,7 @@ function Nav() {
     <ol key="main" className="flex justify-between flex-grow">
       {Object.entries(Tracks).map(([trackName, track]) => (
         <li className="flex items-center" key={trackName}>
-          <span>
+          <span className="flex items-center">
             <span
               className={`mr-2 inline-block w-4 h-4`}
               style={{ backgroundColor: track.background }}
