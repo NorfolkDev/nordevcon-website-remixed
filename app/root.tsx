@@ -11,7 +11,7 @@ import {
 import globalStyles from "./styles/globals.css";
 import config from "~/config.json";
 import WildWaves from "./components/svg/WideWaves";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
