@@ -87,7 +87,7 @@ export function Hero() {
   }, []);
 
   return (
-    <div className="relative flex flex-col justify-between overflow-hidden lg:min-h-screen bg-slate-900">
+    <div className="relative flex flex-col justify-between overflow-hidden bg-slate-900 lg:min-h-screen">
       {count > 0 && (
         <div className="absolute top-0 right-0 p-4 text-5xl font-extrabold text-yellow-500">
           <p>{count}</p>
@@ -95,8 +95,8 @@ export function Hero() {
       )}
 
       {count >= 99 && (
-        <div className="absolute inset-0 z-50 flex flex-col justify-center p-4 text-center text-white bg-opacity-90 bg-slate-900">
-          <div className="max-w-5xl mx-auto">
+        <div className="absolute inset-0 z-50 flex flex-col justify-center bg-slate-900 bg-opacity-90 p-4 text-center text-white">
+          <div className="mx-auto max-w-5xl">
             {/*
              * You are a cheater - well done ;)
              */}
@@ -113,7 +113,7 @@ export function Hero() {
 
             <a
               href="https://ti.to/norfolkdevelopers/nordevcon-23/discount/clicky-mcclickface"
-              className="block p-4 text-xl font-extrabold bg-red-500 rounded"
+              className="block rounded bg-red-500 p-4 text-xl font-extrabold"
             >
               Claim my 10% discount
             </a>
@@ -130,13 +130,13 @@ export function Hero() {
           />
         ))}
       </div>
-      <div className="z-10 flex flex-col gap-8 p-4 py-16 pointer-events-none select-none md:p-16 md:pt-32 md:mb-16 ">
+      <div className="pointer-events-none z-10 flex select-none flex-col gap-8 p-4 py-16 md:mb-16 md:p-16 md:pt-32 ">
         <div className="max-w-sm text-white md:max-w-lg">
           <Logo />
         </div>
 
         <div>
-          <p className="inline text-5xl font-extrabold leading-normal tracking-tight text-transparent bg-gradient-to-r from-wave-purple via-wave-pink to-wave-orange bg-clip-text font-display bg-move">
+          <p className="font-display bg-move inline bg-gradient-to-r from-wave-purple via-wave-pink to-wave-orange bg-clip-text text-5xl font-extrabold leading-normal tracking-tight text-transparent">
             East Anglia&apos;s biggest tech conference
           </p>
         </div>
@@ -147,7 +147,7 @@ export function Hero() {
           </p>
         </div>
       </div>
-      <div className="z-30 -ml-24 text-white pointer-events-none -mr-96 lg:mx-0">
+      <div className="pointer-events-none z-30 -ml-24 -mr-96 text-white lg:mx-0">
         <City />
       </div>
     </div>

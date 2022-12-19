@@ -2,9 +2,9 @@ import Logo from "./svg/Logo";
 
 export function Footer() {
   return (
-    <footer className="py-16 border-t-2">
-      <div className="flex flex-col items-center justify-between px-4 mx-auto max-w-7xl lg:px-8 lg:flex-row">
-        <div className="w-full max-w-xs mb-6 text-slate-900 lg:mb-0">
+    <footer className="border-t-2 py-16">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between px-4 lg:flex-row lg:px-8">
+        <div className="mb-6 w-full max-w-xs text-slate-900 lg:mb-0">
           <Logo />
         </div>
 

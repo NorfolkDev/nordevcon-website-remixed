@@ -5,7 +5,7 @@ export function Newsletter() {
         <div aria-hidden="true" className="hidden sm:block">
           <div className="absolute inset-y-0 left-0 w-1/2 rounded-r-3xl bg-wave-pink" />
           <svg
-            className="absolute -ml-3 text-wave-orange top-8 left-1/2"
+            className="absolute top-8 left-1/2 -ml-3 text-wave-orange"
             width={404}
             height={392}
             fill="none"
@@ -30,14 +30,14 @@ export function Newsletter() {
             />
           </svg>
         </div>
-        <div className="px-4 mx-auto sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
-          <div className="relative px-6 py-10 overflow-hidden rounded-lg shadow-xl bg-slate-900 sm:px-12 sm:py-20">
+        <div className="mx-auto px-4 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
+          <div className="relative overflow-hidden rounded-lg bg-slate-900 px-6 py-10 shadow-xl sm:px-12 sm:py-20">
             <div
               aria-hidden="true"
               className="absolute inset-0 -mt-72 sm:-mt-32 md:mt-0"
             >
               <svg
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0 h-full w-full"
                 preserveAspectRatio="xMidYMid slice"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -60,7 +60,7 @@ export function Newsletter() {
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                   Subscribe to our newsletter
                 </h2>
-                <p className="max-w-2xl mx-auto mt-6 text-lg text-left text-slate-200">
+                <p className="mx-auto mt-6 max-w-2xl text-left text-lg text-slate-200">
                   <span className="mr-2">📰</span>Get the latest updates
                   <br />
                   <span className="mr-2">📣</span>Speaker announcements &amp;
@@ -75,21 +75,21 @@ export function Newsletter() {
                 action="https://dev.us16.list-manage.com/subscribe/post?u=2218b6b7ecab15ba988c8ca7e&amp;id=bd28db2956&amp;f_id=003778e0f0"
                 className="mt-12 sm:mx-auto sm:flex sm:max-w-lg"
               >
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   <label htmlFor="cta-email" className="sr-only">
                     Email address
                   </label>
                   <input
                     id="cta-email"
                     name="EMAIL"
-                    className="block w-full px-5 py-3 text-base text-gray-900 placeholder-gray-500 border border-transparent rounded-md shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-600"
+                    className="block w-full rounded-md border border-transparent px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-600"
                     placeholder="Enter your email"
                   />
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-3">
                   <button
                     type="submit"
-                    className="block w-full px-5 py-3 text-base font-medium text-white border border-transparent rounded-md shadow bg-slate-500 hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-600 sm:px-10"
+                    className="block w-full rounded-md border border-transparent bg-slate-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-600 sm:px-10"
                   >
                     Subscribe
                   </button>

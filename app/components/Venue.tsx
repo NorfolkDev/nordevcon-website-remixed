@@ -1,6 +1,6 @@
 export function Venue() {
   return (
-    <div className="px-4 pt-12 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:pt-20">
+    <div className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8 lg:pt-20">
       <h2 className="mb-8 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl xl:text-6xl">
         The Venue
       </h2>
@@ -25,33 +25,33 @@ export function Venue() {
       <p className="text-2xl text-slate-900"></p>
 
       <ol className="grid grid-cols-4 gap-4 pt-8">
-        <li className="col-span-2 lg:col-span-1 aspect-w-3 aspect-h-2">
+        <li className="aspect-w-3 aspect-h-2 col-span-2 lg:col-span-1">
           <img
-            className="object-cover rounded-lg shadow-lg"
+            className="rounded-lg object-cover shadow-lg"
             src="/img/kings-center_1.jpg"
             alt=""
           />
         </li>
 
-        <li className="col-span-2 lg:col-span-1 aspect-w-3 aspect-h-2">
+        <li className="aspect-w-3 aspect-h-2 col-span-2 lg:col-span-1">
           <img
-            className="object-cover rounded-lg shadow-lg"
+            className="rounded-lg object-cover shadow-lg"
             src="/img/kings-center_2.jpg"
             alt=""
           />
         </li>
 
-        <li className="col-span-2 lg:col-span-1 aspect-w-3 aspect-h-2">
+        <li className="aspect-w-3 aspect-h-2 col-span-2 lg:col-span-1">
           <img
-            className="object-cover rounded-lg shadow-lg"
+            className="rounded-lg object-cover shadow-lg"
             src="/img/kings-center_3.jpg"
             alt=""
           />
         </li>
 
-        <li className="col-span-2 lg:col-span-1 aspect-w-3 aspect-h-2">
+        <li className="aspect-w-3 aspect-h-2 col-span-2 lg:col-span-1">
           <img
-            className="object-cover rounded-lg shadow-lg"
+            className="rounded-lg object-cover shadow-lg"
             src="/img/kings-center_4.jpg"
             alt=""
           />
