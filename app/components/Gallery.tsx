@@ -6,7 +6,7 @@ export function Gallery({ images }: { images: string[] }) {
           <li key={`gallery_${i}`}>
             <div className="aspect-w-3 aspect-h-2">
               <img
-                className="object-cover rounded-lg shadow-lg"
+                className="rounded-lg object-cover shadow-lg"
                 src={image}
                 alt=""
               />
