@@ -73,12 +73,7 @@ function Day({ datetime, sessions, stars, isSharing }: DayProps) {
           </div>
 
           <div className="flex-grow">
-            <Talks
-              talks={session.talks}
-              stars={stars}
-              // @ts-expect-error Typescript refactor has caught a typo here, not sure how best to fix it yet
-              inSharing={isSharing}
-            />
+            <Talks talks={session.talks} stars={stars} isSharing={isSharing} />
           </div>
         </li>
       ))}
