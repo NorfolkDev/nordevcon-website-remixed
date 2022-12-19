@@ -11,7 +11,8 @@
     "start": "cross-env NODE_ENV=production npm run dev:wrangler",
     "typecheck": "tsc -b",
     "lint": "eslint . --ext .ts,.tsx",
-    "format-check": "prettier --check --ignore-path .gitignore ."
+    "format-check": "prettier --check --ignore-path .gitignore .",
+    "format": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
     "@heroicons/react": "^2.0.13",
