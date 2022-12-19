@@ -1,4 +1,3 @@
-// import Talks from "./Talks";
 import format from "date-fns/format";
 import Star from "./svg/Star";
 import config from "../config.json";
@@ -8,6 +7,7 @@ import type { FlattenedDays } from "~/lib/schedule";
 import { parseSchedule, Tracks } from "~/lib/schedule";
 import { Link } from "@remix-run/react";
 import type { ScheduleRecord } from "~/lib/airtable.server";
+import { createContext, useContext } from "react";
 
 function Nav() {
   return (
@@ -51,11 +51,9 @@ function Wishlist({ wishlist, share }: Wishlistprops) {
 interface DayProps {
   datetime: Date;
   sessions: FlattenedDays[number]["sessions"];
-  stars: [number[], (value: number) => void];
-  isSharing: boolean;
 }
 
-function Day({ datetime, sessions, stars, isSharing }: DayProps) {
+function Day({ datetime, sessions }: DayProps) {
   let date = format(datetime, "do LLLL");
 
   return (
@@ -73,7 +71,7 @@ function Day({ datetime, sessions, stars, isSharing }: DayProps) {
           </div>
 
           <div className="flex-grow">
-            <Talks talks={session.talks} stars={stars} isSharing={isSharing} />
+            <Talks talks={session.talks} />
           </div>
         </li>
       ))}
@@ -83,12 +81,10 @@ function Day({ datetime, sessions, stars, isSharing }: DayProps) {
 
 interface TalksProps {
   talks: FlattenedDays[number]["sessions"][number]["talks"];
-  stars: [number[], (value: number) => void];
-  isSharing: boolean;
 }
 
-function Talks({ talks, stars, isSharing }: TalksProps) {
-  const [wishlist, addWishlist] = stars;
+function Talks({ talks }: TalksProps) {
+  const { wishlist, addWishlist, isSharing } = useContext(WishlistContext);
 
   return (
     <ol className="xl:flex">
@@ -145,6 +141,12 @@ function Talks({ talks, stars, isSharing }: TalksProps) {
   );
 }
 
+const WishlistContext = createContext({
+  wishlist: [] as number[],
+  addWishlist: (_value: number) => {},
+  isSharing: false,
+});
+
 interface ScheduleProps {
   data: ScheduleRecord[];
   filter?: string[];
@@ -171,28 +173,28 @@ export function Schedule({
       : setWishlist([...wishlist, add]);
 
   return (
-    <section className="relative px-4 pt-12 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:pt-20">
-      <ol
-        className={clsx({
-          "flex bg-white py-4 border-b-2 top-0 right-0 z-10 sticky px-4":
-            !isSharing,
-        })}
-      >
-        <Nav />
+    <WishlistContext.Provider value={{ wishlist, addWishlist, isSharing }}>
+      <section className="relative px-4 pt-12 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:pt-20">
+        <ol
+          className={clsx({
+            "flex bg-white py-4 border-b-2 top-0 right-0 z-10 sticky px-4":
+              !isSharing,
+          })}
+        >
+          <Nav />
 
-        {!isSharing && <Wishlist wishlist={wishlist} share={share} />}
-      </ol>
-      <ol>
-        {schedule.map((day, i) => (
-          <Day
-            key={`schedule_day_${i}`}
-            datetime={day.datetime}
-            sessions={day.sessions}
-            isSharing={isSharing}
-            stars={[wishlist, addWishlist]}
-          />
-        ))}
-      </ol>
-    </section>
+          {!isSharing && <Wishlist wishlist={wishlist} share={share} />}
+        </ol>
+        <ol>
+          {schedule.map((day, i) => (
+            <Day
+              key={`schedule_day_${i}`}
+              datetime={day.datetime}
+              sessions={day.sessions}
+            />
+          ))}
+        </ol>
+      </section>
+    </WishlistContext.Provider>
   );
 }
