@@ -13,6 +13,8 @@ import { Tickets } from "~/components/Tickets";
 import { Venue } from "~/components/Venue";
 import { AirtableApi } from "~/lib/airtable.server";
 import { PriceProvider } from "~/lib/price-provider.server";
+import { deserializeSchedule } from "~/lib/schedule";
+import { parseSchedule } from "~/lib/schedule.server";
 
 export async function loader({ context }: LoaderArgs) {
   const airtable = new AirtableApi(context as any);
@@ -24,7 +26,7 @@ export async function loader({ context }: LoaderArgs) {
 
   return json({
     price: PriceProvider(),
-    schedule,
+    schedule: parseSchedule(schedule, []),
     sponsors,
   });
 }
@@ -41,7 +43,7 @@ export default function Index() {
           price ? { ...price, expires_at: new Date(price.expires_at) } : null
         }
       />
-      <Schedule data={schedule} />
+      <Schedule schedule={deserializeSchedule(schedule)} />
       <Sponsors data={sponsors} />
       <Venue />
       <DiscordCard />
