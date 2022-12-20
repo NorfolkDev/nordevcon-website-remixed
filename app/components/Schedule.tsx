@@ -3,7 +3,7 @@ import Star from "./svg/Star";
 import config from "../config.json";
 import { useStickyState } from "~/lib/use-sticky-state";
 import { clsx } from "clsx";
-import type { FlattenedDays } from "~/lib/schedule";
+import type { ScheduleData } from "~/lib/schedule";
 import { parseSchedule, Tracks } from "~/lib/schedule";
 import { Link } from "@remix-run/react";
 import type { ScheduleRecord } from "~/lib/airtable.server";
@@ -50,7 +50,7 @@ function Wishlist({ wishlist, share }: Wishlistprops) {
 
 interface DayProps {
   datetime: Date;
-  sessions: FlattenedDays[number]["sessions"];
+  sessions: ScheduleData[number]["sessions"];
 }
 
 function Day({ datetime, sessions }: DayProps) {
@@ -80,7 +80,7 @@ function Day({ datetime, sessions }: DayProps) {
 }
 
 interface TalksProps {
-  talks: FlattenedDays[number]["sessions"][number]["talks"];
+  talks: ScheduleData[number]["sessions"][number]["talks"];
 }
 
 function Talks({ talks }: TalksProps) {

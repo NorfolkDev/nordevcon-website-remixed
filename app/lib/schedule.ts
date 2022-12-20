@@ -36,7 +36,7 @@ export const Tracks = {
 export function parseSchedule(
   data: ScheduleRecord[],
   filter: string[]
-): FlattenedDays {
+): ScheduleData {
   let filtered = filterSchedule(data, filter);
   let days = groupSchedule(filtered);
   let flatten = flattenSchedule(days);
@@ -105,7 +105,7 @@ function groupSchedule(schedule: ScheduleRecord[]): Days {
   }, {} as Days);
 }
 
-export type FlattenedDays = Array<{
+export type ScheduleData = Array<{
   datetime: Date;
   sessions: Array<{
     datetime: Date;
@@ -116,7 +116,7 @@ export type FlattenedDays = Array<{
 /**
  * Takes the key'd day/time objects, and reduces to just arrays of objects
  */
-function flattenSchedule(days: Days): FlattenedDays {
+function flattenSchedule(days: Days): ScheduleData {
   return Object.keys(days).map((key) => {
     let day = days[key];
 
@@ -134,7 +134,7 @@ function flattenSchedule(days: Days): FlattenedDays {
 /**
  * Takes the arrays and sorts at every depth
  */
-function sortSchedule(days: FlattenedDays): FlattenedDays {
+function sortSchedule(days: ScheduleData): ScheduleData {
   return (
     days
       .map(({ datetime, sessions }) => ({
