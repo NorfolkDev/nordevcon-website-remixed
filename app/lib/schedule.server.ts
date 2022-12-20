@@ -34,10 +34,12 @@ export function parseSchedule(
 /**
  * Provides the schedule having been filtered by record ids
  */
-export function filterSchedule(data: ScheduleRecord[], filter: string[]) {
+function filterSchedule(data: ScheduleRecord[], filter: string[]) {
   if (filter.length === 0) return data;
 
-  return data.filter((talk) => filter.includes(talk.fields.id.toString()));
+  return data.filter(
+    (talk) => talk.fields.Live && filter.includes(talk.fields.id.toString())
+  );
 }
 
 type Days = Record<
