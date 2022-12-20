@@ -1,7 +1,7 @@
 import LightBulbIcon from "@heroicons/react/24/outline/LightBulbIcon";
 import { format } from "date-fns";
 import config from "~/config.json";
-import type { Price } from "~/lib/price-provider.server";
+import type { Price } from "~/lib/constants";
 
 interface TicketHeroProps {
   title: string;
