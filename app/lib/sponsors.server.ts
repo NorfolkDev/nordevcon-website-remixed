@@ -1,6 +1,12 @@
 import type { SponsorRecord } from "./airtable.server";
 
-export function parseSponsors(data: SponsorRecord[]) {
+export interface SponsorsData {
+  elite: SponsorRecord["fields"][];
+  partner: SponsorRecord["fields"][];
+  associate: SponsorRecord["fields"][];
+}
+
+export function parseSponsors(data: SponsorRecord[]): SponsorsData {
   let elite = getPackages(data, "Elite");
   let partner = getPackages(data, "Partner");
   let associate = getPackages(data, "Associate");
@@ -11,7 +17,7 @@ export function parseSponsors(data: SponsorRecord[]) {
 /**
  * Maps fields prop to entries, and then filter by type
  */
-export function getPackages(
+function getPackages(
   data: SponsorRecord[],
   type: string
 ): SponsorRecord["fields"][] {

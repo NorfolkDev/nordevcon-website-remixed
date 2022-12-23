@@ -1,14 +1,14 @@
 import { Link } from "@remix-run/react";
 import { SocialIcon } from "react-social-icons";
 import type { SponsorRecord } from "~/lib/airtable.server";
-import { parseSponsors } from "~/lib/sponsors";
+import type { SponsorsData } from "~/lib/sponsors.server";
 
 interface SponsorsProps {
-  data: SponsorRecord[];
+  sponsors: SponsorsData;
 }
 
-export function Sponsors({ data }: SponsorsProps) {
-  const { elite, partner, associate } = parseSponsors(data);
+export function Sponsors({ sponsors }: SponsorsProps) {
+  const { elite, partner, associate } = sponsors;
 
   return (
     <div className="mt-12 bg-indigo-700 lg:mt-20">

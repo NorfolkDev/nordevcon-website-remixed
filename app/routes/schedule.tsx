@@ -3,19 +3,20 @@ import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { Schedule } from "~/components/Schedule";
 import { AirtableApi } from "~/lib/airtable.server";
+import { parseSchedule } from "~/lib/schedule.server";
+import { deserializeSchedule } from "~/lib/schedule";
 
 export async function loader({ request, context }: LoaderArgs) {
   const airtable = new AirtableApi(context as any);
   const url = new URL(request.url);
-  const filter = url.searchParams.get("share");
+  const filter = url.searchParams.get("share")?.split(",") ?? [];
   return json({
-    filter: filter?.split(",") ?? [],
-    schedule: await airtable.getSchedule(),
+    schedule: parseSchedule(await airtable.getSchedule(), filter),
   });
 }
 
 export default function SchedulePage() {
-  const { filter, schedule } = useLoaderData<typeof loader>();
+  const { schedule } = useLoaderData<typeof loader>();
 
-  return <Schedule filter={filter} data={schedule} isSharing />;
+  return <Schedule schedule={deserializeSchedule(schedule)} isSharing />;
 }

@@ -3,16 +3,15 @@ import Star from "./svg/Star";
 import config from "../config.json";
 import { useStickyState } from "~/lib/use-sticky-state";
 import { clsx } from "clsx";
-import type { FlattenedDays } from "~/lib/schedule";
-import { parseSchedule, Tracks } from "~/lib/schedule";
+import type { ScheduleData } from "~/lib/schedule.server";
 import { Link } from "@remix-run/react";
-import type { ScheduleRecord } from "~/lib/airtable.server";
 import { createContext, useContext } from "react";
+import { TRACKS } from "~/lib/constants";
 
 function Nav() {
   return (
     <ol key="main" className="flex flex-grow justify-between">
-      {Object.entries(Tracks).map(([trackName, track]) => (
+      {Object.entries(TRACKS).map(([trackName, track]) => (
         <li className="flex items-center" key={trackName}>
           <span className="flex items-center">
             <span
@@ -50,7 +49,7 @@ function Wishlist({ wishlist, share }: Wishlistprops) {
 
 interface DayProps {
   datetime: Date;
-  sessions: FlattenedDays[number]["sessions"];
+  sessions: ScheduleData[number]["sessions"];
 }
 
 function Day({ datetime, sessions }: DayProps) {
@@ -80,7 +79,7 @@ function Day({ datetime, sessions }: DayProps) {
 }
 
 interface TalksProps {
-  talks: FlattenedDays[number]["sessions"][number]["talks"];
+  talks: ScheduleData[number]["sessions"][number]["talks"];
 }
 
 function Talks({ talks }: TalksProps) {
@@ -99,8 +98,9 @@ function Talks({ talks }: TalksProps) {
                 ? "mb-2 border-l-8 pl-2 xl:m-0 xl:w-1/3"
                 : "w-full border-l-8"
             }`}
-            // @ts-expect-error
-            style={{ borderColor: Tracks[talk.Track]?.border }}
+            style={{
+              borderColor: TRACKS[talk.Track as keyof typeof TRACKS]?.border,
+            }}
           >
             {talk.TopicNames.length > 0 && (
               <div className="mb-2">
@@ -148,18 +148,11 @@ const WishlistContext = createContext({
 });
 
 interface ScheduleProps {
-  data: ScheduleRecord[];
-  filter?: string[];
+  schedule: ScheduleData;
   isSharing?: boolean;
 }
 
-export function Schedule({
-  data,
-  filter = [],
-  isSharing = false,
-}: ScheduleProps) {
-  const schedule = parseSchedule(data, filter);
-
+export function Schedule({ schedule, isSharing = false }: ScheduleProps) {
   const ScheduleKey = config.schedule_key;
   const [wishlist, setWishlist] = useStickyState([] as number[], ScheduleKey);
   const share = new URLSearchParams({
