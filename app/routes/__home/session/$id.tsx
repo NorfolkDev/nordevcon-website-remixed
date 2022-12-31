@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 export default function SessionModal() {
   // return <Schedule schedule={deserializeSchedule(schedule)} isSharing />;
   const dialog = useRef<HTMLDialogElement>(null);
-  const router = useNavigate();
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     dialog.current?.showModal();
@@ -14,7 +14,7 @@ export default function SessionModal() {
     <dialog
       ref={dialog}
       className="backdrop:bg-black backdrop:bg-opacity-50"
-      onClose={() => router(-1)}
+      onClose={() => navigate("../")}
     >
       <p>Shits and giggles</p>
     </dialog>
