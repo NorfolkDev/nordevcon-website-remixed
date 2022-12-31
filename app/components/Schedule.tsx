@@ -84,6 +84,7 @@ interface TalksProps {
 
 function Talks({ talks }: TalksProps) {
   const { wishlist, addWishlist, isSharing } = useContext(WishlistContext);
+  const titleClassName = "leading-6";
 
   return (
     <ol className="xl:flex">
@@ -117,13 +118,17 @@ function Talks({ talks }: TalksProps) {
                     talk.Cancelled ? " line-through" : ""
                   }`}
                 >
-                  <Link
-                    to="/session/10"
-                    preventScrollReset
-                    className="leading-6"
-                  >
-                    {talk.Title}
-                  </Link>
+                  {isSharing ? (
+                    <span className={titleClassName}>{talk.Title}</span>
+                  ) : (
+                    <Link
+                      to={`/session/${talk.id}`}
+                      preventScrollReset
+                      className={titleClassName}
+                    >
+                      {talk.Title}
+                    </Link>
+                  )}
                   {!isSharing && talk.Title && talk.Track && (
                     <button
                       className="ml-2 text-yellow-500"
