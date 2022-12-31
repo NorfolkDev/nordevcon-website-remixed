@@ -103,13 +103,7 @@ function Talks({ talks }: TalksProps) {
               borderColor: TRACKS[talk.Track as keyof typeof TRACKS]?.border,
             }}
           >
-            {talk.TopicNames.length > 0 && (
-              <div className="mb-2">
-                <span className="rounded bg-cyan-200 p-1 text-sm font-bold uppercase text-cyan-700">
-                  {talk.TopicNames.join(", ")}
-                </span>
-              </div>
-            )}
+            <TalkTopics topics={talk.TopicNames} />
 
             {talk.Live && (
               <div>
@@ -149,6 +143,22 @@ function Talks({ talks }: TalksProps) {
         );
       })}
     </ol>
+  );
+}
+
+interface TalkTopicsProps {
+  topics: Array<string>;
+}
+
+export function TalkTopics({ topics }: TalkTopicsProps) {
+  if (topics.length === 0) return null;
+
+  return (
+    <div className="mb-2">
+      <span className="rounded bg-cyan-200 p-1 text-sm font-bold uppercase text-cyan-700">
+        {topics.join(", ")}
+      </span>
+    </div>
   );
 }
 
