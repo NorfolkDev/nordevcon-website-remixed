@@ -57,7 +57,7 @@ const airtableResponseSchema = <TSchema extends AnySchema>(
     records: z.array(recordSchema),
   });
 
-const stringArraySchema = z.array(z.string());
+const stringArraySchema = z.array(z.string().nullable());
 
 const scheduleResponseSchema = airtableResponseSchema(
   z.object({
@@ -75,6 +75,10 @@ const scheduleResponseSchema = airtableResponseSchema(
       id: z.number(),
       Start: z.string(),
       Title: z.optional(z.string()),
+      Website: z.optional(stringArraySchema).default([]),
+      LinkedIn: z.optional(stringArraySchema).default([]),
+      Twitter: z.optional(stringArraySchema).default([]),
+      AvatarUrl: z.optional(stringArraySchema).default([]),
     }),
   })
 );
