@@ -1,6 +1,6 @@
 import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { DiscordCard } from "~/components/DiscordCard";
 import { Footer } from "~/components/Footer";
 import { Hero } from "~/components/Hero";
@@ -34,6 +34,7 @@ export async function loader({ context }: LoaderArgs) {
 
 export default function Index() {
   const { price, schedule, sponsors } = useLoaderData<typeof loader>();
+
   return (
     <Layout>
       <Hero />
@@ -50,6 +51,7 @@ export default function Index() {
       <DiscordCard />
       <Newsletter />
       <Footer />
+      <Outlet />
     </Layout>
   );
 }
