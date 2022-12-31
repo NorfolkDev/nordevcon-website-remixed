@@ -21,6 +21,11 @@ export default function SessionModal() {
         })
       }
     >
+      <form method="dialog">
+        <button className="rounded-md bg-wave-purple px-4 py-2 font-bold text-white">
+          Close
+        </button>
+      </form>
       <p>Shits and giggles</p>
     </dialog>
   );
