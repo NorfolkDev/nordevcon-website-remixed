@@ -9,25 +9,26 @@ export default async function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
-  const http2PushLinksHeaders = remixContext.matches
-    .flatMap(({ route: { module, imports } }) => [module, ...(imports || [])])
-    .filter(Boolean)
-    .concat([
-      remixContext.manifest.url,
-      remixContext.manifest.entry.module,
-      ...remixContext.manifest.entry.imports,
-    ]);
-  responseHeaders.set(
-    "Link",
-    http2PushLinksHeaders
-      .map(
-        (link: string) =>
-          `<${link}>; rel=preload; as=script; crossorigin=anonymous`
-      )
-      .concat(responseHeaders.get("Link") as string)
-      .filter(Boolean)
-      .join(",")
-  );
+  // TODO: This is broken in Remix 1.10.0-pre.5. Find a different way to add these push headers.
+  // const http2PushLinksHeaders = remixContext.matches
+  //   .flatMap(({ route: { module, imports } }) => [module, ...(imports || [])])
+  //   .filter(Boolean)
+  //   .concat([
+  //     remixContext.manifest.url,
+  //     remixContext.manifest.entry.module,
+  //     ...remixContext.manifest.entry.imports,
+  //   ]);
+  // responseHeaders.set(
+  //   "Link",
+  //   http2PushLinksHeaders
+  //     .map(
+  //       (link: string) =>
+  //         `<${link}>; rel=preload; as=script; crossorigin=anonymous`
+  //     )
+  //     .concat(responseHeaders.get("Link") as string)
+  //     .filter(Boolean)
+  //     .join(",")
+  // );
 
   const controller = new AbortController();
   let didError = false;
