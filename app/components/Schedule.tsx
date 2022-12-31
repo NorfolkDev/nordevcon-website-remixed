@@ -10,7 +10,7 @@ import { TRACKS } from "~/lib/constants";
 
 function Nav() {
   return (
-    <ol key="main" className="flex justify-between flex-grow">
+    <ol key="main" className="flex flex-grow justify-between">
       {Object.entries(TRACKS).map(([trackName, track]) => (
         <li className="flex items-center" key={trackName}>
           <span className="flex items-center">
@@ -38,7 +38,7 @@ function Wishlist({ wishlist, share }: Wishlistprops) {
     <div>
       <Link
         to={"/schedule?" + decodeURIComponent(share.toString())}
-        className="flex px-4 py-2 ml-4 font-bold text-white rounded-md bg-wave-purple"
+        className="ml-4 flex rounded-md bg-wave-purple px-4 py-2 font-bold text-white"
       >
         View
         <Star filled={true} />
@@ -64,7 +64,7 @@ function Day({ datetime, sessions }: DayProps) {
       {sessions.map((session, i) => (
         <li key={`sessions_${date}_${i}`} className="flex py-2">
           <div className="mr-8">
-            <h3 className="pt-2 text-2xl leading-none text-gray-600 align-top tabular-nums">
+            <h3 className="pt-2 align-top text-2xl tabular-nums leading-none text-gray-600">
               {format(session.datetime, "HH:mm")}
             </h3>
           </div>
@@ -104,7 +104,7 @@ function Talks({ talks }: TalksProps) {
           >
             {talk.TopicNames.length > 0 && (
               <div className="mb-2">
-                <span className="p-1 text-sm font-bold uppercase rounded bg-cyan-200 text-cyan-700">
+                <span className="rounded bg-cyan-200 p-1 text-sm font-bold uppercase text-cyan-700">
                   {talk.TopicNames.join(", ")}
                 </span>
               </div>
@@ -117,7 +117,11 @@ function Talks({ talks }: TalksProps) {
                     talk.Cancelled ? " line-through" : ""
                   }`}
                 >
-                  <Link to="/session/10" className="leading-6">
+                  <Link
+                    to="/session/10"
+                    preventScrollReset
+                    className="leading-6"
+                  >
                     {talk.Title}
                   </Link>
                   {!isSharing && talk.Title && talk.Track && (
@@ -169,7 +173,7 @@ export function Schedule({ schedule, isSharing = false }: ScheduleProps) {
 
   return (
     <WishlistContext.Provider value={{ wishlist, addWishlist, isSharing }}>
-      <section className="relative px-4 pt-12 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:pt-20">
+      <section className="relative mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8 lg:pt-20">
         <ol
           className={clsx({
             "sticky top-0 right-0 z-10 flex border-b-2 bg-white py-4 px-4":
