@@ -14,7 +14,11 @@ export default function SessionModal() {
     <dialog
       ref={dialog}
       className="backdrop:bg-black backdrop:bg-opacity-50"
-      onClose={() => navigate("../")}
+      onClose={() =>
+        navigate("../", {
+          preventScrollReset: true,
+        })
+      }
     >
       <p>Shits and giggles</p>
     </dialog>
