@@ -54,13 +54,13 @@ export function CatchBoundary() {
       <div className="-mt-4 md:-mt-8 lg:-mt-12">
         <WildWaves />
       </div>
-      <main className="mx-auto flex max-w-7xl flex-col justify-center gap-8 p-8 lg:gap-16 lg:p-16">
-        <h1 className="text-center text-3xl font-bold leading-relaxed text-white lg:text-5xl">
+      <main className="flex flex-col justify-center gap-8 p-8 mx-auto max-w-7xl lg:gap-16 lg:p-16">
+        <h1 className="text-3xl font-bold leading-relaxed text-center text-white lg:text-5xl">
           <span className="text-wave-orange">{caught.status}:</span>{" "}
           {statusText}
         </h1>
 
-        <div className="relative mx-auto max-w-5xl">
+        <div className="relative max-w-5xl mx-auto">
           {caught.status === 404 ? (
             <>
               <Link to="/">
