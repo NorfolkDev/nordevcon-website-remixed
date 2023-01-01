@@ -39,7 +39,7 @@ export default function SessionModal() {
         className="mx-auto overflow-hidden rounded-md shadow-md max-w-7xl bg-wave-pink backdrop:bg-black backdrop:bg-opacity-50"
         method="dialog"
       >
-        <header className="flex justify-end p-4 mb-4 text-white">
+        <header className="flex justify-end p-4 text-white">
           <div className="flex-1">
             <h2 className="text-lg font-bold lg:text-2xl">{session.Title}</h2>
           </div>
@@ -50,52 +50,77 @@ export default function SessionModal() {
           </div>
         </header>
 
-        <div className="p-4 bg-white">
-          {session.Description.split("\n\n").map(
-            (line: string, key: number) => (
-              <p className="mb-2" key={`session_description_${key}`}>
-                {line}
-              </p>
-            )
-          )}
-        </div>
+        {session.Description && (
+          <div className="p-4 bg-white">
+            {session.Description.split("\n\n").map(
+              (line: string, key: number) => (
+                <p className="mb-2" key={`session_description_${key}`}>
+                  {line}
+                </p>
+              )
+            )}
+          </div>
+        )}
 
-        <div className="p-4 bg-slate-200">
-          <div className="flex">
-            <p className="flex-1 text-xl">
-              {session.Track}
-              {` `}
-              {format(new Date(session.Start), "do LLLL HH:mm")}
+        <div className="p-4 bg-slate-300">
+          <div className="mb-4">
+            <p className="text-xl">
+              In the {session.Track} on{" "}
+              {format(new Date(session.Start), "do LLLL")} at{" "}
+              {format(new Date(session.Start), "HH:mm")}
             </p>
           </div>
 
-          <h4 className="text-lg font-bold tracking-tight">
-            {session.SpeakerNames.join(", ")}
-          </h4>
-
-          {/* <Social organisation={session} /> */}
-          {/* <SocialIcon url={session.Twitter} fgColor="white" /> */}
-          <ul className="flex gap-2 py-2">
-            {session.Twitter[0] && (
-              <li>
-                <SocialIcon
-                  url={session.Twitter[0]}
-                  fgColor="white"
-                  className="!h-8 !w-8"
+          <div className="flex gap-4">
+            {session.AvatarUrl[0] && (
+              <div>
+                <img
+                  className="w-24 border-4 rounded-full border-slate-900"
+                  alt={`${session.SpeakerNames.join(
+                    ", "
+                  )} is at nor(DEV): con 2023`}
+                  src={session.AvatarUrl[0]}
                 />
-              </li>
+              </div>
             )}
+            <div>
+              <h4 className="text-2xl font-bold tracking-tight">
+                {session.SpeakerNames.join(", ")}
+              </h4>
 
-            {session.LinkedIn[0] && (
-              <li>
-                <SocialIcon
-                  url={session.LinkedIn[0]}
-                  fgColor="white"
-                  className="!h-8 !w-8"
-                />
-              </li>
-            )}
-          </ul>
+              <ul className="flex gap-2 py-2">
+                {session.Twitter[0] && (
+                  <li>
+                    <SocialIcon
+                      url={session.Twitter[0]}
+                      fgColor="white"
+                      className="!h-12 !w-12"
+                    />
+                  </li>
+                )}
+
+                {session.LinkedIn[0] && (
+                  <li>
+                    <SocialIcon
+                      url={session.LinkedIn[0]}
+                      fgColor="white"
+                      className="!h-12 !w-12"
+                    />
+                  </li>
+                )}
+
+                {session.Website[0] && (
+                  <li>
+                    <SocialIcon
+                      url={session.Website[0]}
+                      fgColor="white"
+                      className="!h-12 !w-12"
+                    />
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
         </div>
       </form>
     </dialog>
