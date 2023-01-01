@@ -34,7 +34,7 @@ export default function SessionModal() {
   return (
     <dialog
       ref={dialog}
-      className="w-full p-0 bg-transparent"
+      className="w-full p-0 bg-transparent backdrop:bg-black backdrop:bg-opacity-50"
       onClose={() =>
         navigate("../", {
           preventScrollReset: true,
@@ -42,7 +42,7 @@ export default function SessionModal() {
       }
     >
       <form
-        className="mx-auto overflow-hidden rounded-md shadow-md max-w-7xl bg-wave-pink backdrop:bg-black backdrop:bg-opacity-50"
+        className="mx-auto overflow-hidden rounded-md shadow-md max-w-7xl bg-wave-pink"
         method="dialog"
       >
         <header className="flex justify-end p-4 text-white">
