@@ -1,23 +1,29 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useNavigate, useParams } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
+import type { LoaderArgs } from "@remix-run/cloudflare";
+import { json } from "@remix-run/server-runtime";
 import { format } from "date-fns";
 import { useRef } from "react";
 import { SocialIcon } from "react-social-icons";
-import { TalkTopics } from "~/components/Schedule";
-import { Social } from "~/components/Sponsors";
-import { getSessionById } from "~/lib/schedule";
-import { ScheduleData } from "~/lib/schedule.server";
+import { AirtableApi } from "~/lib/airtable.server";
 import { useIsomorphicLayoutEffect } from "~/lib/use-isomorphic-layout-effect";
-import { useRouteData } from "~/lib/use-route-data";
+
+export async function loader({ context, params }: LoaderArgs) {
+  const airtable = new AirtableApi(context as any);
+  const schedule = await airtable.getSchedule();
+  const { id } = params;
+
+  const session = schedule.find((s) => s.fields.id.toString() === id);
+
+  if (!session) throw new Response("Session not found", { status: 404 });
+
+  return json({
+    session: session.fields,
+  });
+}
 
 export default function SessionModal() {
-  const params = useParams();
-
-  // @TODO: Done do the TypeScript things
-  const { schedule } = useRouteData<{ schedule: Array<string> }>(
-    "routes/__home"
-  );
-  const session = getSessionById(schedule, params.id ?? "");
+  const { session } = useLoaderData<typeof loader>();
   const dialog = useRef<HTMLDialogElement>(null);
   const navigate = useNavigate();
 
