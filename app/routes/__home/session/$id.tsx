@@ -24,7 +24,7 @@ function Dialog({ children }: DialogProps): JSX.Element {
   return (
     <dialog
       ref={dialog}
-      className="w-full p-0 bg-transparent backdrop:bg-black backdrop:bg-opacity-50"
+      className="w-full bg-transparent p-0 backdrop:bg-black backdrop:bg-opacity-50"
       onClose={() =>
         navigate("../", {
           preventScrollReset: true,
@@ -32,7 +32,7 @@ function Dialog({ children }: DialogProps): JSX.Element {
       }
     >
       <form
-        className="mx-auto overflow-hidden text-white rounded-md shadow-md max-w-7xl bg-wave-pink"
+        className="mx-auto max-w-7xl overflow-hidden rounded-md bg-wave-pink text-white shadow-md"
         method="dialog"
       >
         {children}
@@ -49,7 +49,7 @@ function DialogHeader({ title }: { title: string }): JSX.Element {
       </div>
       <div>
         <button type="submit" className="font-bold">
-          <XMarkIcon className="w-8 h-8" />
+          <XMarkIcon className="h-8 w-8" />
         </button>
       </div>
     </header>
@@ -78,7 +78,7 @@ export default function SessionModal() {
       <DialogHeader title={session?.Title ?? "Untitled Session"} />
 
       {session.Description && (
-        <div className="p-4 bg-white text-slate-900">
+        <div className="bg-white p-4 text-slate-900">
           {session.Description.split("\n\n").map(
             (line: string, key: number) => (
               <p className="mb-2" key={`session_description_${key}`}>
@@ -89,7 +89,7 @@ export default function SessionModal() {
         </div>
       )}
 
-      <div className="p-4 bg-slate-300 text-slate-900">
+      <div className="bg-slate-300 p-4 text-slate-900">
         {session?.Start && (
           <div className="mb-4">
             <p className="text-xl">
@@ -104,7 +104,7 @@ export default function SessionModal() {
           {session?.AvatarUrl[0] && (
             <div>
               <img
-                className="w-24 border-4 rounded-full border-slate-900"
+                className="w-24 rounded-full border-4 border-slate-900"
                 alt={`${session.SpeakerNames.join(
                   ", "
                 )} is at nor(DEV): con 2023`}
