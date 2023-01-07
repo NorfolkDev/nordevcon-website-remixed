@@ -12,11 +12,11 @@ export function Sponsors({ sponsors }: SponsorsProps) {
 
   return (
     <div className="mt-12 bg-indigo-700 lg:mt-20">
-      <div className="relative px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:py-20">
+      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
         <h2 className="mb-6 text-3xl font-bold tracking-tight text-indigo-100 lg:text-5xl">
           Sponsors
         </h2>
-        <p className="mb-12 text-2xl text-center text-indigo-100">
+        <p className="mb-12 text-center text-2xl text-indigo-100">
           The Norfolk Developers Conference wouldn&apos;t be possible without
           the support of our wonderful sponsors. We&apos;re really grateful for
           their trust and support; and are proud to feature them below.
@@ -28,22 +28,22 @@ export function Sponsors({ sponsors }: SponsorsProps) {
           <Associate organisations={associate} />
 
           <div className="text-indigo-100">
-            <p className="text-2xl text-center">
+            <p className="text-center text-2xl">
               Would you like to Sponsor East Anglia&apos;s biggest tech
               conference? Packages starting at £500. Get in touch and let&apos;s
               talk about a conference sponsorship.
             </p>
 
-            <div className="flex items-center justify-center gap-6 mt-12">
+            <div className="mt-12 flex items-center justify-center gap-6">
               <a
                 href="https://airtable.com/shrciza0EVMWpP5Th"
-                className="px-8 py-4 text-xl font-bold text-indigo-100 border border-transparent rounded-md bg-violet-800 hover:bg-violet-700"
+                className="rounded-md border border-transparent bg-violet-800 px-8 py-4 text-xl font-bold text-indigo-100 hover:bg-violet-700"
               >
                 Apply to sponsor
               </a>
               <Link
                 to="/sponsorship"
-                className="px-8 py-4 text-xl font-bold text-indigo-100 border border-transparent rounded-md bg-violet-600 hover:bg-violet-500"
+                className="rounded-md border border-transparent bg-violet-600 px-8 py-4 text-xl font-bold text-indigo-100 hover:bg-violet-500"
               >
                 Read more
               </Link>
@@ -63,17 +63,17 @@ function Elite({ organisation }: EliteProps) {
   if (!organisation) return null;
 
   return (
-    <div className="grid p-4 bg-indigo-400 rounded-md lg:grid-cols-2 lg:items-center lg:gap-6 lg:p-12">
+    <div className="grid rounded-md bg-indigo-400 p-4 lg:grid-cols-2 lg:items-center lg:gap-6 lg:p-12">
       <div className="">
         <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
           {organisation.Name}
         </h2>
         <SponsorDescription description={organisation.Description} />
-        <div className="flex gap-4 mt-8">
+        <div className="mt-8 flex gap-4">
           <div className="rounded-md shadow">
             <a
               href={organisation.Website}
-              className="flex items-center justify-center px-5 py-3 text-base font-bold text-white bg-indigo-900 border border-transparent rounded-md hover:bg-indigo-800"
+              className="flex items-center justify-center rounded-md border border-transparent bg-indigo-900 px-5 py-3 text-base font-bold text-white hover:bg-indigo-800"
             >
               Visit their Site
             </a>
@@ -81,7 +81,7 @@ function Elite({ organisation }: EliteProps) {
           <Social organisation={organisation} />
         </div>
       </div>
-      <div className="flex justify-center col-span-1 row-start-1 px-8 py-8 lg:row-start-auto">
+      <div className="col-span-1 row-start-1 flex justify-center px-8 py-8 lg:row-start-auto">
         <img className="max-h-12" src={organisation.Logo} alt="Workcation" />
       </div>
     </div>
@@ -101,7 +101,7 @@ function Partner({ organisations }: SponsorProps) {
         ({ Logo, Name, Description, ...organisation }, key) => (
           <div
             key={`associate_${key}`}
-            className="flex flex-col items-center px-8 py-8 bg-indigo-100 rounded-md"
+            className="flex flex-col items-center rounded-md bg-indigo-100 px-8 py-8"
           >
             <img className="max-h-12" src={Logo} alt={Name} />
 
@@ -125,7 +125,7 @@ function Associate({ organisations }: SponsorProps) {
       {organisations.map((entry, key) => (
         <div
           key={`associate_${key}`}
-          className="flex justify-center col-span-1 px-8 py-8 bg-indigo-100 rounded-md"
+          className="col-span-1 flex justify-center rounded-md bg-indigo-100 px-8 py-8"
         >
           <img className="max-h-12" src={entry.Logo} alt={entry.Name} />
         </div>
