@@ -3,21 +3,17 @@ import { useNavigate, useParams } from "@remix-run/react";
 import { format } from "date-fns";
 import { useRef } from "react";
 import { SocialIcon } from "react-social-icons";
-import { TalkTopics } from "~/components/Schedule";
-import { Social } from "~/components/Sponsors";
 import { getSessionById } from "~/lib/schedule";
-import { ScheduleData } from "~/lib/schedule.server";
 import { useIsomorphicLayoutEffect } from "~/lib/use-isomorphic-layout-effect";
 import { useRouteData } from "~/lib/use-route-data";
+import type { ScheduleData } from "~/lib/schedule.server";
+import type { ReactNode } from "react";
 
-export default function SessionModal() {
-  const params = useParams();
+type DialogProps = {
+  children: ReactNode;
+};
 
-  // @TODO: Done do the TypeScript things
-  const { schedule } = useRouteData<{ schedule: Array<string> }>(
-    "routes/__home"
-  );
-  const session = getSessionById(schedule, params.id ?? "");
+function Dialog({ children }: DialogProps): JSX.Element {
   const dialog = useRef<HTMLDialogElement>(null);
   const navigate = useNavigate();
 
@@ -36,33 +32,65 @@ export default function SessionModal() {
       }
     >
       <form
-        className="mx-auto overflow-hidden rounded-md shadow-md max-w-7xl bg-wave-pink"
+        className="mx-auto overflow-hidden text-white rounded-md shadow-md max-w-7xl bg-wave-pink"
         method="dialog"
       >
-        <header className="flex justify-end p-4 text-white">
-          <div className="flex-1">
-            <h2 className="text-lg font-bold lg:text-2xl">{session.Title}</h2>
-          </div>
-          <div>
-            <button type="submit" className="font-bold">
-              <XMarkIcon className="w-8 h-8" />
-            </button>
-          </div>
-        </header>
+        {children}
+      </form>
+    </dialog>
+  );
+}
 
-        {session.Description && (
-          <div className="p-4 bg-white">
-            {session.Description.split("\n\n").map(
-              (line: string, key: number) => (
-                <p className="mb-2" key={`session_description_${key}`}>
-                  {line}
-                </p>
-              )
-            )}
-          </div>
-        )}
+function DialogHeader({ title }: { title: string }): JSX.Element {
+  return (
+    <header className="flex justify-end p-4 ">
+      <div className="flex-1">
+        <h2 className="text-lg font-bold lg:text-2xl">{title}</h2>
+      </div>
+      <div>
+        <button type="submit" className="font-bold">
+          <XMarkIcon className="w-8 h-8" />
+        </button>
+      </div>
+    </header>
+  );
+}
 
-        <div className="p-4 bg-slate-300">
+function NotFound(): JSX.Element {
+  return (
+    <Dialog>
+      <DialogHeader title="404 - Session not found!" />
+    </Dialog>
+  );
+}
+
+export default function SessionModal() {
+  const params = useParams();
+
+  const data = useRouteData<{ schedule: ScheduleData }>("routes/__home");
+  if (!data?.schedule) return <NotFound />;
+
+  const session = getSessionById(data.schedule, params.id ?? "");
+  if (!session) return <NotFound />;
+
+  return (
+    <Dialog>
+      <DialogHeader title={session?.Title ?? "Untitled Session"} />
+
+      {session.Description && (
+        <div className="p-4 bg-white text-slate-900">
+          {session.Description.split("\n\n").map(
+            (line: string, key: number) => (
+              <p className="mb-2" key={`session_description_${key}`}>
+                {line}
+              </p>
+            )
+          )}
+        </div>
+      )}
+
+      <div className="p-4 bg-slate-300 text-slate-900">
+        {session?.Start && (
           <div className="mb-4">
             <p className="text-xl">
               In the {session.Track} on{" "}
@@ -70,19 +98,22 @@ export default function SessionModal() {
               {format(new Date(session.Start), "HH:mm")}
             </p>
           </div>
+        )}
 
-          <div className="flex gap-4">
-            {session.AvatarUrl[0] && (
-              <div>
-                <img
-                  className="w-24 border-4 rounded-full border-slate-900"
-                  alt={`${session.SpeakerNames.join(
-                    ", "
-                  )} is at nor(DEV): con 2023`}
-                  src={session.AvatarUrl[0]}
-                />
-              </div>
-            )}
+        <div className="flex gap-4">
+          {session?.AvatarUrl[0] && (
+            <div>
+              <img
+                className="w-24 border-4 rounded-full border-slate-900"
+                alt={`${session.SpeakerNames.join(
+                  ", "
+                )} is at nor(DEV): con 2023`}
+                src={session.AvatarUrl[0]}
+              />
+            </div>
+          )}
+
+          {!!session?.SpeakerNames.length && (
             <div>
               <h4 className="text-2xl font-bold tracking-tight">
                 {session.SpeakerNames.join(", ")}
@@ -120,9 +151,9 @@ export default function SessionModal() {
                 )}
               </ul>
             </div>
-          </div>
+          )}
         </div>
-      </form>
-    </dialog>
+      </div>
+    </Dialog>
   );
 }

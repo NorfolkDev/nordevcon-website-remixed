@@ -88,12 +88,16 @@ function groupSchedule(schedule: ScheduleRecord[]): Days {
   }, {} as Days);
 }
 
+export type Talk = ScheduleRecord["fields"];
+
+export type Session = {
+  datetime: Date;
+  talks: Talk[];
+};
+
 export type ScheduleData = Array<{
   datetime: Date;
-  sessions: Array<{
-    datetime: Date;
-    talks: ScheduleRecord["fields"][];
-  }>;
+  sessions: Session[];
 }>;
 
 /**
