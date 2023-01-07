@@ -12,3 +12,13 @@ export const deserializeSchedule = (
       datetime: new Date(session.datetime),
     })),
   }));
+
+export const getSessionById = (schedule: ScheduleData, id: string) => {
+  console.log(schedule);
+
+  return schedule
+    .reduce((sessions, day) => [...day.sessions, ...sessions], [])
+    .reduce((talks, sessions) => [...sessions.talks, ...talks], [])
+    .find(talk => talk.id.toString() === id);
+
+}
