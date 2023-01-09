@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import { SocialIcon } from "react-social-icons";
-import type { SponsorRecord } from "~/lib/airtable.server";
+import type { SponsorAirtableRecord } from "~/lib/airtable.server";
 import type { SponsorsData } from "~/lib/sponsors.server";
 
 interface SponsorsProps {
@@ -56,7 +56,7 @@ export function Sponsors({ sponsors }: SponsorsProps) {
 }
 
 interface EliteProps {
-  organisation: SponsorRecord["fields"] | undefined;
+  organisation: SponsorAirtableRecord["fields"] | undefined;
 }
 
 function Elite({ organisation }: EliteProps) {
@@ -89,7 +89,7 @@ function Elite({ organisation }: EliteProps) {
 }
 
 interface SponsorProps {
-  organisations: SponsorRecord["fields"][];
+  organisations: SponsorAirtableRecord["fields"][];
 }
 
 function Partner({ organisations }: SponsorProps) {
@@ -136,7 +136,7 @@ function Associate({ organisations }: SponsorProps) {
 
 interface SocialProps {
   organisation: Pick<
-    SponsorRecord["fields"],
+    SponsorAirtableRecord["fields"],
     "Twitter" | "LinkedIn" | "Website"
   >;
 }

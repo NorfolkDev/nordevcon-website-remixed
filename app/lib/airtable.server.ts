@@ -9,14 +9,14 @@ export class AirtableApi {
     this.#waitUntil = context.waitUntil;
   }
 
-  async getSchedule(): Promise<ScheduleRecord[]> {
+  async getSchedule(): Promise<ScheduleAirtableRecord[]> {
     const response = await this.#get("/Schedule");
     const json = await response.json();
 
     return scheduleResponseSchema.parse(json).records;
   }
 
-  async getSponsors(): Promise<SponsorRecord[]> {
+  async getSponsors(): Promise<SponsorAirtableRecord[]> {
     const response = await this.#get("/Sponsors");
     const json = await response.json();
 
@@ -103,10 +103,10 @@ const sponsorResponseSchema = airtableResponseSchema(
   })
 );
 
-export type ScheduleRecord = z.infer<
+export type ScheduleAirtableRecord = z.infer<
   typeof scheduleResponseSchema
 >["records"][number];
 
-export type SponsorRecord = z.infer<
+export type SponsorAirtableRecord = z.infer<
   typeof sponsorResponseSchema
 >["records"][number];

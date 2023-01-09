@@ -13,7 +13,6 @@ import { Tickets } from "~/components/Tickets";
 import { Venue } from "~/components/Venue";
 import { AirtableApi } from "~/lib/airtable.server";
 import { PriceProvider } from "~/lib/price-provider.server";
-import { deserializeSchedule } from "~/lib/schedule";
 import { parseSchedule } from "~/lib/schedule.server";
 import { parseSponsors } from "~/lib/sponsors.server";
 
@@ -45,7 +44,7 @@ export default function Index() {
           price ? { ...price, expires_at: new Date(price.expires_at) } : null
         }
       />
-      <Schedule schedule={deserializeSchedule(schedule)} />
+      <Schedule schedule={schedule} />
       <Sponsors sponsors={sponsors} />
       <Venue />
       <DiscordCard />

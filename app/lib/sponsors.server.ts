@@ -1,12 +1,12 @@
-import type { SponsorRecord } from "./airtable.server";
+import type { SponsorAirtableRecord } from "./airtable.server";
 
 export interface SponsorsData {
-  elite: SponsorRecord["fields"][];
-  partner: SponsorRecord["fields"][];
-  associate: SponsorRecord["fields"][];
+  elite: SponsorAirtableRecord["fields"][];
+  partner: SponsorAirtableRecord["fields"][];
+  associate: SponsorAirtableRecord["fields"][];
 }
 
-export function parseSponsors(data: SponsorRecord[]): SponsorsData {
+export function parseSponsors(data: SponsorAirtableRecord[]): SponsorsData {
   let elite = getPackages(data, "Elite");
   let partner = getPackages(data, "Partner");
   let associate = getPackages(data, "Associate");
@@ -18,9 +18,9 @@ export function parseSponsors(data: SponsorRecord[]): SponsorsData {
  * Maps fields prop to entries, and then filter by type
  */
 function getPackages(
-  data: SponsorRecord[],
+  data: SponsorAirtableRecord[],
   type: string
-): SponsorRecord["fields"][] {
+): SponsorAirtableRecord["fields"][] {
   return data
     .map((entity) => entity.fields)
     .filter((entity) => entity.Live)

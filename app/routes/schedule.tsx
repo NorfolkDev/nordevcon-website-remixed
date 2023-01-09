@@ -4,7 +4,6 @@ import { useLoaderData } from "@remix-run/react";
 import { Schedule } from "~/components/Schedule";
 import { AirtableApi } from "~/lib/airtable.server";
 import { parseSchedule } from "~/lib/schedule.server";
-import { deserializeSchedule } from "~/lib/schedule";
 
 export async function loader({ request, context }: LoaderArgs) {
   const airtable = new AirtableApi(context as any);
@@ -18,5 +17,5 @@ export async function loader({ request, context }: LoaderArgs) {
 export default function SchedulePage() {
   const { schedule } = useLoaderData<typeof loader>();
 
-  return <Schedule schedule={deserializeSchedule(schedule)} isSharing />;
+  return <Schedule schedule={schedule} isSharing />;
 }

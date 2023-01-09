@@ -1,9 +1,7 @@
 import type { SerializeFrom } from "@remix-run/server-runtime";
-import type { ScheduleData, Session, Talk } from "./schedule.server";
+import type { Schedule, Session, Talk } from "./schedule.server";
 
-export const deserializeSchedule = (
-  data: SerializeFrom<ScheduleData>
-): ScheduleData =>
+export const deserializeSchedule = (data: SerializeFrom<Schedule>): Schedule =>
   data.map((day) => ({
     ...day,
     datetime: new Date(day.datetime),
@@ -13,7 +11,7 @@ export const deserializeSchedule = (
     })),
   }));
 
-export const getSessionById = (schedule: ScheduleData, id: string) => {
+export const getSessionById = (schedule: Schedule, id: string) => {
   return schedule
     .reduce(
       (sessions: Array<Session>, day) => [...day.sessions, ...sessions],

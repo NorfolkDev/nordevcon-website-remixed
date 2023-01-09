@@ -1,8 +1,38 @@
 import { compareAsc, format } from "date-fns";
-import type { ScheduleRecord } from "./airtable.server";
+import type { ScheduleAirtableRecord } from "./airtable.server";
 import { TRACKS } from "./constants";
 
 /* @TODO: Here be dragons, refactor!! */
+
+export type Schedule = Array<{
+  datetime: Date;
+  sessions: Session[];
+}>;
+
+export type Session = {
+  datetime: Date;
+  talks: Talk[];
+};
+
+export type Talk = {
+  id: string;
+  Track: string;
+  Title: string;
+  Description: string;
+  TopicNames: string[];
+  Speakers: Speaker[];
+  Live: boolean;
+  Cancelled: boolean;
+  Start: string;
+};
+
+export type Speaker = {
+  Name: string;
+  Website: string;
+  LinkedIn: string;
+  Twitter: string;
+  AvatarUrl: string;
+};
 
 /**
  * Parses the airtable schedule into a usable format
@@ -15,10 +45,28 @@ import { TRACKS } from "./constants";
  *
  */
 export function parseSchedule(
-  data: ScheduleRecord[],
+  data: ScheduleAirtableRecord[],
   filter: string[]
-): ScheduleData {
-  let filtered = filterSchedule(data, filter);
+): Schedule {
+  // Convert ScheduleAirtableRecord[] to Talk[]
+  let sessions = data.map(
+    ({ fields }: ScheduleAirtableRecord) =>
+      ({
+        ...fields,
+        id: fields.id.toString(),
+        Speakers: fields.Speakers.map((_, index) => ({
+          Name: fields.SpeakerNames[index],
+          Website: fields.Website[index],
+          LinkedIn: fields.LinkedIn[index],
+          Twitter: fields.Twitter[index],
+          AvatarUrl: fields.AvatarUrl[index],
+        })),
+        Start: fields.Start,
+      } as Talk)
+  );
+
+  //
+  let filtered = filterSchedule(sessions, filter);
   let days = groupSchedule(filtered);
   let flatten = flattenSchedule(days);
   let sorted = sortSchedule(flatten);
@@ -34,35 +82,26 @@ export function parseSchedule(
 /**
  * Provides the schedule having been filtered by record ids
  */
-function filterSchedule(data: ScheduleRecord[], filter: string[]) {
+function filterSchedule(data: Talk[], filter: string[]): Talk[] {
   if (filter.length === 0) return data;
 
-  return data.filter(
-    (talk) => talk.fields.Live && filter.includes(talk.fields.id.toString())
-  );
+  return data.filter((talk) => talk.Live && filter.includes(talk.id));
 }
-
-type Days = Record<
-  string,
-  {
-    datetime: Date;
-    sessions: Record<
-      string,
-      {
-        datetime: Date;
-        talks: ScheduleRecord["fields"][];
-      }
-    >;
-  }
->;
 
 /**
  * Groups the schedule into day, time & sessions
  */
-function groupSchedule(schedule: ScheduleRecord[]): Days {
-  return schedule.reduce((days, talk) => {
-    let datetime = new Date(talk.fields.Start);
+type GroupedSchedule = Record<
+  string,
+  {
+    datetime: Date;
+    sessions: Record<string, Session>;
+  }
+>;
 
+function groupSchedule(schedule: Talk[]): GroupedSchedule {
+  return schedule.reduce((days, talk) => {
+    let datetime = new Date(talk.Start);
     let date = format(datetime, "do LLLL");
     let time = format(datetime, "HH:mm");
 
@@ -82,28 +121,16 @@ function groupSchedule(schedule: ScheduleRecord[]): Days {
       };
     }
 
-    days[date].sessions[time].talks.push(talk.fields);
+    days[date].sessions[time].talks.push(talk);
 
     return days;
-  }, {} as Days);
+  }, {} as GroupedSchedule);
 }
-
-export type Talk = ScheduleRecord["fields"];
-
-export type Session = {
-  datetime: Date;
-  talks: Talk[];
-};
-
-export type ScheduleData = Array<{
-  datetime: Date;
-  sessions: Session[];
-}>;
 
 /**
  * Takes the key'd day/time objects, and reduces to just arrays of objects
  */
-function flattenSchedule(days: Days): ScheduleData {
+function flattenSchedule(days: GroupedSchedule): Schedule {
   return Object.keys(days).map((key) => {
     let day = days[key];
 
@@ -121,7 +148,7 @@ function flattenSchedule(days: Days): ScheduleData {
 /**
  * Takes the arrays and sorts at every depth
  */
-function sortSchedule(days: ScheduleData): ScheduleData {
+function sortSchedule(days: Schedule): Schedule {
   const trackKeys = Object.keys(TRACKS);
   return (
     days
