@@ -10,16 +10,17 @@ import { TRACKS } from "~/lib/constants";
 
 function Nav() {
   return (
-    <ol key="main" className="flex flex-grow justify-between">
+    <ol key="main" className="flex justify-between flex-grow gap-1">
       {Object.entries(TRACKS).map(([trackName, track]) => (
-        <li className="flex items-center" key={trackName}>
-          <span className="flex items-center">
-            <span
-              className={`mr-2 inline-block h-4 w-4`}
-              style={{ backgroundColor: track.background }}
-            ></span>
-            {trackName}
-          </span>
+        <li
+          key={trackName}
+          className="flex flex-col gap-2 sm:flex-row sm:items-center"
+        >
+          <div
+            className="h-4 sm:w-4"
+            style={{ backgroundColor: track.background }}
+          />
+          <label className="text-sm lg:text-lg">{trackName}</label>
         </li>
       ))}
     </ol>
@@ -35,15 +36,13 @@ function Wishlist({ wishlist, share }: Wishlistprops) {
   if (wishlist.length === 0) return null;
 
   return (
-    <div>
-      <Link
-        to={"/schedule?" + decodeURIComponent(share.toString())}
-        className="ml-4 flex rounded-md bg-wave-purple px-4 py-2 font-bold text-white"
-      >
-        View
-        <Star filled={true} />
-      </Link>
-    </div>
+    <Link
+      to={"/schedule?" + decodeURIComponent(share.toString())}
+      className="flex px-4 py-2 font-bold text-white rounded-md bg-wave-purple"
+    >
+      View
+      <Star filled={true} />
+    </Link>
   );
 }
 
@@ -64,7 +63,7 @@ function Day({ datetime, sessions }: DayProps) {
       {sessions.map((session, i) => (
         <li key={`sessions_${date}_${i}`} className="flex py-2">
           <div className="mr-8">
-            <h3 className="pt-2 align-top text-2xl tabular-nums leading-none text-gray-600">
+            <h3 className="pt-2 text-2xl leading-none text-gray-600 align-top tabular-nums">
               {format(session.datetime, "HH:mm")}
             </h3>
           </div>
@@ -155,7 +154,7 @@ export function TalkTopics({ topics }: TalkTopicsProps) {
 
   return (
     <div className="mb-2">
-      <span className="rounded bg-cyan-200 p-1 text-sm font-bold uppercase text-cyan-700">
+      <span className="p-1 text-sm font-bold uppercase rounded bg-cyan-200 text-cyan-700">
         {topics.filter(Boolean).join(", ")}
       </span>
     </div>
@@ -188,17 +187,21 @@ export function Schedule({ schedule, isSharing = false }: ScheduleProps) {
 
   return (
     <WishlistContext.Provider value={{ wishlist, addWishlist, isSharing }}>
-      <section className="relative mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8 lg:pt-20">
-        <ol
+      <section className="relative px-4 pt-12 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:pt-20">
+        <div
           className={clsx({
-            "sticky top-0 right-0 z-10 flex border-b-2 bg-white py-4 px-4":
+            "sticky top-0 right-0 z-10 flex flex-col gap-4 border-b-2 bg-white p-4 sm:flex-row sm:items-center":
               !isSharing,
           })}
         >
-          <Nav />
+          <div className="flex-1">
+            <Nav />
+          </div>
 
-          {!isSharing && <Wishlist wishlist={wishlist} share={share} />}
-        </ol>
+          <div>
+            {!isSharing && <Wishlist wishlist={wishlist} share={share} />}
+          </div>
+        </div>
         <ol>
           {schedule.map((day, i) => (
             <Day
