@@ -16,4 +16,4 @@ export const deserializeSchedule = (
 export const getSessionById = (schedule: ScheduleData, id: Talk["id"]) =>
   schedule
     .flatMap((day) => day.sessions.flatMap((session) => session.talks))
-    .find((talk) => talk.id === id);
+    .find((talk) => talk.id.toString() === id.toString());
