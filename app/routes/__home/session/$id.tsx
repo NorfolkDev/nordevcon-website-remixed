@@ -70,7 +70,8 @@ export default function SessionModal() {
   const data = useRouteData<{ schedule: ScheduleData }>("routes/__home");
   if (!data?.schedule) return <NotFound />;
 
-  const session = getSessionById(data.schedule, params.id ?? "");
+  // @TODO: Some presumptions here that id: 0 will never exist
+  const session = getSessionById(data.schedule, (params.id ?? 0) as number);
   if (!session) return <NotFound />;
 
   return (
