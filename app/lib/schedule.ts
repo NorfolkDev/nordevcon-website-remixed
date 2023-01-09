@@ -13,12 +13,7 @@ export const deserializeSchedule = (
     })),
   }));
 
-export const getSessionById = (schedule: ScheduleData, id: string) => {
-  return schedule
-    .reduce(
-      (sessions: Array<Session>, day) => [...day.sessions, ...sessions],
-      []
-    )
-    .reduce((talks: Array<Talk>, sessions) => [...sessions.talks, ...talks], [])
-    .find((talk) => talk.id.toString() === id);
-};
+export const getSessionById = (schedule: ScheduleData, id: Talk["id"]) =>
+  schedule
+    .flatMap((day) => day.sessions.flatMap((session) => session.talks))
+    .find((talk) => talk.id === id);
