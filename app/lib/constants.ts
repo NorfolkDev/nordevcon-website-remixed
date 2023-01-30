@@ -12,7 +12,7 @@ export const PRICES = [
   {
     name: "Standard",
     expires_at: new Date(2023, 1, 22),
-    tickets: ["£90", "£180", "£300"],
+    tickets: ["£120", "£180", "£300"],
   },
 ];
 
