@@ -63,26 +63,22 @@ function Elite({ organisation }: EliteProps) {
   if (!organisation) return null;
 
   return (
-    <div className="grid rounded-md bg-indigo-400 p-4 lg:grid-cols-2 lg:items-center lg:gap-6 lg:p-12">
+    <div className="grid rounded-md bg-indigo-100 p-4 lg:grid-cols-2 lg:items-center lg:gap-6 lg:p-12">
       <div className="">
-        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        <h2 className="mb-6 text-3xl font-bold  tracking-tight sm:text-4xl">
           {organisation.Name}
         </h2>
         <SponsorDescription description={organisation.Description} />
         <div className="mt-8 flex gap-4">
-          <div className="rounded-md shadow">
-            <a
-              href={organisation.Website}
-              className="flex items-center justify-center rounded-md border border-transparent bg-indigo-900 px-5 py-3 text-base font-bold text-white hover:bg-indigo-800"
-            >
-              Visit their Site
-            </a>
-          </div>
           <Social organisation={organisation} />
         </div>
       </div>
       <div className="col-span-1 row-start-1 flex justify-center px-8 py-8 lg:row-start-auto">
-        <img className="max-h-12" src={organisation.Logo} alt="Workcation" />
+        <img
+          className="object-contain"
+          src={organisation.Logo}
+          alt={organisation.Name}
+        />
       </div>
     </div>
   );
@@ -96,18 +92,20 @@ function Partner({ organisations }: SponsorProps) {
   if (!organisations.length) return null;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    <div className="grid auto-rows-fr gap-6 lg:grid-cols-2">
       {organisations.map(
         ({ Logo, Name, Description, ...organisation }, key) => (
           <div
             key={`associate_${key}`}
             className="flex flex-col items-center rounded-md bg-indigo-100 px-8 py-8"
           >
-            <img className="max-h-12" src={Logo} alt={Name} />
+            <img className="object-contain" src={Logo} alt={Name} />
 
-            <div className="mt-8">
+            <div className="mt-8 flex grow flex-col">
               <h3 className="mb-2 text-3xl font-bold">{Name}</h3>
-              <SponsorDescription description={Description} />
+              <div className="grow">
+                <SponsorDescription description={Description} />
+              </div>
               <Social organisation={organisation} />
             </div>
           </div>
@@ -121,14 +119,15 @@ function Associate({ organisations }: SponsorProps) {
   if (!organisations.length) return null;
 
   return (
-    <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+    <div className="grid auto-rows-fr grid-cols-2 gap-6 lg:grid-cols-4">
       {organisations.map((entry, key) => (
-        <div
+        <a
+          href={entry.Website}
           key={`associate_${key}`}
           className="col-span-1 flex justify-center rounded-md bg-indigo-100 px-8 py-8"
         >
-          <img className="max-h-12" src={entry.Logo} alt={entry.Name} />
-        </div>
+          <img className="object-contain" src={entry.Logo} alt={entry.Name} />
+        </a>
       ))}
     </div>
   );
