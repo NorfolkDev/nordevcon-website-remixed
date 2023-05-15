@@ -1,57 +1,57 @@
-import type { LoaderArgs } from "@remix-run/cloudflare";
-import { json } from "@remix-run/cloudflare";
-import { Outlet, useLoaderData } from "@remix-run/react";
-import { DiscordCard } from "~/components/DiscordCard";
-import { Footer } from "~/components/Footer";
-import { Hero } from "~/components/Hero";
-import { Introduction } from "~/components/Introduction";
 import { Layout } from "~/components/Layout";
-import { Newsletter } from "~/components/Newsletter";
-import { Schedule } from "~/components/Schedule";
-import { Sponsors } from "~/components/Sponsors";
-import { Tickets } from "~/components/Tickets";
-import { Venue } from "~/components/Venue";
-import { AirtableApi } from "~/lib/airtable.server";
-import { PriceProvider } from "~/lib/price-provider.server";
-import { deserializeSchedule } from "~/lib/schedule";
-import { parseSchedule } from "~/lib/schedule.server";
-import { parseSponsors } from "~/lib/sponsors.server";
-
-export async function loader({ context }: LoaderArgs) {
-  const airtable = new AirtableApi(context as any);
-
-  const [schedule, sponsors] = await Promise.all([
-    airtable.getSchedule(),
-    airtable.getSponsors(),
-  ]);
-
-  return json({
-    price: PriceProvider(),
-    schedule: parseSchedule(schedule, []),
-    sponsors: parseSponsors(sponsors),
-  });
-}
+import Logo from "~/components/svg/Logo";
+import Waves from "~/components/svg/Waves";
 
 export default function Index() {
-  const { price, schedule, sponsors } = useLoaderData<typeof loader>();
-
   return (
     <Layout>
-      <Hero />
+      <div className="flex min-h-screen flex-col justify-between bg-slate-900">
+        <div className="flex flex-col gap-8 p-4 py-16 md:mb-16 md:p-16 md:pt-32">
+          <div className="max-w-sm text-white md:max-w-lg">
+            <Logo />
+          </div>
 
-      <Introduction />
-      <Tickets
-        price={
-          price ? { ...price, expires_at: new Date(price.expires_at) } : null
-        }
-      />
-      <Schedule schedule={deserializeSchedule(schedule)} />
-      <Sponsors sponsors={sponsors} />
-      <Venue />
-      <DiscordCard />
-      <Newsletter />
-      <Footer />
-      <Outlet />
+          <div>
+            <p className="font-display bg-move inline bg-gradient-to-r from-wave-purple via-wave-pink to-wave-orange bg-clip-text text-5xl font-extrabold leading-normal tracking-tight text-transparent">
+              East Anglia&apos;s biggest tech conference
+            </p>
+          </div>
+
+          <div>
+            <p className="text-4xl tracking-tight text-white">
+              22nd &amp; 23rd February 2024
+            </p>
+          </div>
+
+          <ol className="flex flex-col gap-4 md:flex-row">
+            <li>
+              <a
+                className="block rounded-md border border-transparent bg-violet-600 px-8 py-4 text-xl font-bold text-indigo-100 hover:bg-violet-500"
+                href="https://airtable.com/shr80UEwZwDxM5GWF"
+              >
+                Apply to Sponsor
+              </a>
+            </li>
+            <li>
+              <a
+                className="block rounded-md border border-transparent bg-violet-600 px-8 py-4 text-xl font-bold text-indigo-100 hover:bg-violet-500"
+                href="https://airtable.com/shrNqdFASI9AItNhG"
+              >
+                Apply to Volunteer
+              </a>
+            </li>
+            <li>
+              <a
+                className="block rounded-md border border-transparent bg-violet-600 px-8 py-4 text-xl font-bold text-indigo-100 hover:bg-violet-500"
+                href="https://nor.dev/cfp"
+              >
+                Apply to Talk
+              </a>
+            </li>
+          </ol>
+        </div>
+        <Waves />
+      </div>
     </Layout>
   );
 }
