@@ -8,6 +8,9 @@ module.exports = {
         "wave-pink": "#AC4B74",
         "wave-orange": "#FA7268",
       },
+      fontFamily: {
+        "comic-sans": "'Comic Sans MS', cursive, sans-serif",
+      },
     },
   },
   plugins: [require("@tailwindcss/aspect-ratio")],
