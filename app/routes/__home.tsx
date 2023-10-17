@@ -1,6 +1,24 @@
+import type { LinksFunction } from "@remix-run/server-runtime";
 import { Layout } from "~/components/Layout";
 import Logo from "~/components/svg/Logo";
 import Waves from "~/components/svg/Waves";
+
+export const links: LinksFunction = () => [
+  {
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "preconnect",
+    href: "https://fonts.googleapis.com",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Comic+Neue&family=Red+Hat+Mono:wght@300&display=swap",
+  },
+];
 
 export default function Index() {
   return (
