@@ -16,7 +16,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Comic+Neue&family=Red+Hat+Mono:wght@300&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Red+Hat+Mono:wght@300&display=swap",
   },
 ];
 
