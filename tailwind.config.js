@@ -9,7 +9,7 @@ module.exports = {
         "wave-orange": "#FA7268",
       },
       fontFamily: {
-        "comic-sans": "'Comic Sans MS', cursive, sans-serif",
+        "comic-sans": "'Comic Sans MS', 'Comic Sans', cursive",
       },
     },
   },
