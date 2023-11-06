@@ -37,7 +37,7 @@ export default function Index() {
 
           <div>
             <p className="text-4xl tracking-tight text-white">
-              22nd &amp; 23rd February 2024
+              15th &amp; 16th February 2024
             </p>
           </div>
 
