@@ -140,7 +140,7 @@ export function Tickets({ price }: TicketsProps) {
               href={config.tickets}
               className="mt-4 flex items-center justify-center rounded-md border border-transparent bg-wave-pink px-5 py-3 text-lg font-extrabold text-white lg:text-2xl"
             >
-              Buy Tickets
+              Crab your ticket now!
             </a>
           </div>
         </div>
