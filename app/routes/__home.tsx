@@ -69,7 +69,7 @@ export default function Index() {
           </ol>
           <h2 className="font-comic-sans text-5xl font-bold leading-normal tracking-tight text-cyan-50 text-transparent underline">
             <a href="https://ti.to/norfolkdevelopers/nordevcon-24">
-              Buy tickets
+              Crab your ticket now!
             </a>
           </h2>
         </div>
